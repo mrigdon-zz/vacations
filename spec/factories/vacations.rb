@@ -11,9 +11,11 @@
 #  updated_at :datetime         not null
 #
 
-class Vacation < ApplicationRecord
-  validates :latitude, presence: true
-  validates :longitude, presence: true
-  validates :title, presence: true
-  validates :year, presence: true
+FactoryBot.define do
+  factory :vacation do
+    latitude { 1.5 }
+    longitude { 1.5 }
+    title { "MyString" }
+    year { 1 }
+  end
 end
