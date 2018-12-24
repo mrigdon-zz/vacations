@@ -5,6 +5,7 @@
 #  id         :bigint(8)        not null, primary key
 #  latitude   :float            not null
 #  longitude  :float            not null
+#  summary    :text             default(""), not null
 #  title      :string           not null
 #  year       :integer          not null
 #  created_at :datetime         not null
@@ -17,5 +18,6 @@ FactoryBot.define do
     longitude { 1.5 }
     title { "MyString" }
     year { 1 }
+    summary { "a cool summary" }
   end
 end

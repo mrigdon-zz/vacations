@@ -8,25 +8,21 @@
 
 vacations = [
   {
-    latitude: 48.856614,
-    longitude: 2.352222,
-    title: 'Paris',
-    year: 2013
+    latitude: 22.890533,
+    longitude: -109.916740,
+    title: 'Cabo',
+    year: 2017,
+    summary: "Sean Brown's college graduation party",
+    images: ['cabo1.jpg', 'cabo2.jpg']
   },
-  {
-    latitude: 40.712775,
-    longitude: -74.005973,
-    title: 'New York',
-    year: 2018
-  },
-  {
-    latitude: 49.282729,
-    longitude: -123.120738,
-    title: 'Vancouver',
-    year: 2017
-  }
 ]
 
 vacations.each do |vacation|
-  Vacation.create! vacation
+  record = Vacation.create! vacation.except(:images)
+  vacation[:images].each do |i|
+    record.images.attach(
+      io: File.open("/Users/mrigdon/Downloads/#{i}"),
+      filename: i
+    )
+  end
 end

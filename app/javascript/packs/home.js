@@ -18,5 +18,7 @@ import 'styles/modal.css';
 import sampleData from '../sampleData';
 
 document.addEventListener('DOMContentLoaded', () => {
-  render(<App mapData={sampleData} />, document.getElementById('root'));
+  const root = document.getElementById('root');
+  const vacations = JSON.parse(root.dataset.vacations);
+  render(<App vacations={vacations} />, root);
 });

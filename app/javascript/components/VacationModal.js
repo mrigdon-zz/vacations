@@ -23,8 +23,7 @@ export default class VacationModal extends React.Component {
     const { vacation, onRequestClose } = this.props;
     const { openImage } = this.state;
     if (!vacation) return null;
-    const { title, year, travellers } = vacation;
-    const images = [image0, image1, image2, image3, image4, image5];
+    const { title, year, images, summary } = vacation;
     return (
       <React.Fragment>
         <Modal isPadded isFixed onRequestClose={onRequestClose}>
@@ -32,9 +31,7 @@ export default class VacationModal extends React.Component {
             <h1>{title}</h1>
             <h1>{year}</h1>
           </div>
-          <h3 className="vacation-modal__travellers">
-            {travellersString(travellers)}
-          </h3>
+          {summary && <p className="vacation-modal__summary">{summary}</p>}
           <div className="vacation-modal__images">
             {images.map((image) => (
               <div

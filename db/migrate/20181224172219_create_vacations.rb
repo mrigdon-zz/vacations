@@ -5,6 +5,7 @@ class CreateVacations < ActiveRecord::Migration[5.2]
       t.float :longitude, null: false
       t.string :title, null: false
       t.integer :year, null: false
+      t.text :summary, null: false, default: ''
 
       t.timestamps
     end

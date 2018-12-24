@@ -5,6 +5,7 @@
 #  id         :bigint(8)        not null, primary key
 #  latitude   :float            not null
 #  longitude  :float            not null
+#  summary    :text             default(""), not null
 #  title      :string           not null
 #  year       :integer          not null
 #  created_at :datetime         not null
@@ -47,6 +48,13 @@ RSpec.describe Vacation, type: :model do
     it 'adds field error' do
       vacation.title = nil
       expect_column_error vacation, :title
+    end
+  end
+
+  context 'when missing summary' do
+    it 'adds field error' do
+      vacation.summary = nil
+      expect_column_error vacation, :summary
     end
   end
 end
