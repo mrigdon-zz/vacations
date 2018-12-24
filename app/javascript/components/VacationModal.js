@@ -35,6 +35,7 @@ export default class VacationModal extends React.Component {
           <div className="vacation-modal__images">
             {images.map((image) => (
               <div
+                key={image}
                 onClick={() => this.onClickImage(image)}
                 style={{ backgroundImage: `url(${image})` }}
                 className="vacation-modal__image"

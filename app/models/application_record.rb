@@ -3,7 +3,7 @@ class ApplicationRecord < ActiveRecord::Base
 
   def image_urls(key)
     send(key).map do |image|
-      Rails.application.routes.url_helpers.rails_blob_path(image, only_path: true)
+      image.blob.service_url
     end
   end
 end
