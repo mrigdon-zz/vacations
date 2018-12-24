@@ -1,0 +1,24 @@
+@font-face {
+  font-family: 'Pacifico';
+  src: url(../fonts/Pacifico-Regular.ttf);
+}
+
+.navbar {
+  font-family: 'Pacifico', cursive;
+  border-bottom: 1px solid #efefef;
+  margin-bottom: 1rem;
+}
+
+.navbar__main {
+  color: black;
+  text-decoration: none;
+}
+
+.navbar__item {
+  display: inline-block;
+  padding: 1rem;
+}
+
+.navbar__item:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}

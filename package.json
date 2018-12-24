@@ -2,6 +2,8 @@
   "name": "vacations",
   "private": true,
   "dependencies": {
+    "@amcharts/amcharts4": "^4.0.11",
+    "@amcharts/amcharts4-geodata": "^4.0.24",
     "@rails/webpacker": "3.5",
     "babel-preset-react": "^6.24.1",
     "prop-types": "^15.6.2",
