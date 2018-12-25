@@ -3,7 +3,7 @@ class ApplicationRecord < ActiveRecord::Base
 
   def image_urls(key)
     send(key).map do |image|
-      image.blob.service_url
+      image.blob.service_url.split('?').first
     end
   end
 end

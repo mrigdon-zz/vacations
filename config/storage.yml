@@ -18,8 +18,18 @@ local:
 google:
   service: GCS
   project: vacations
-  credentials: <%= Rails.root.join("/Users/mrigdon/Downloads/vacations-446f0c41f441.json") %>
-  bucket: vacation-images
+  bucket: <%= ENV.fetch('GOOGLE_BUCKET') %>
+  credentials:
+    type: <%= ENV.fetch('GOOGLE_TYPE') %>
+    project_id: <%= ENV.fetch('GOOGLE_PROJECT_ID') %>
+    private_key_id: <%= ENV.fetch('GOOGLE_PRIVATE_KEY_ID') %>
+    private_key: <%= ENV.fetch('GOOGLE_PRIVATE_KEY').dump %>
+    client_email: <%= ENV.fetch('GOOGLE_CLIENT_EMAIL') %>
+    client_id: <%= ENV.fetch('GOOGLE_CLIENT_ID') %>
+    auth_uri: <%= ENV.fetch('GOOGLE_AUTH_URI') %>
+    token_uri: <%= ENV.fetch('GOOGLE_TOKEN_URI') %>
+    auth_provider_x509_cert_url: <%= ENV.fetch('GOOGLE_AUTH_CERT') %>
+    client_x509_cert_url: <%= ENV.fetch('GOOGLE_CLIENT_CERT') %>
 
 # Use rails credentials:edit to set the Azure Storage secret (as azure_storage:storage_access_key)
 # microsoft:
