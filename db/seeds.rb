@@ -21,7 +21,7 @@ vacations.each do |vacation|
   record = Vacation.create! vacation.except(:images)
   vacation[:images].each do |i|
     record.images.attach(
-      io: File.open("/Users/mrigdon/Downloads/#{i}"),
+      io: File.open("#{Rails.root}/public/#{i}"),
       filename: i
     )
   end
