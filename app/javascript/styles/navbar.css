@@ -4,19 +4,22 @@
 }
 
 .navbar {
-  font-family: 'Pacifico', cursive;
   border-bottom: 1px solid #efefef;
   margin-bottom: 1rem;
 }
 
 .navbar__main {
-  color: black;
-  text-decoration: none;
+  font-family: 'Pacifico', cursive;
 }
 
 .navbar__item {
+  color: black;
+  text-decoration: none;
   display: inline-block;
   padding: 1rem;
+  line-height: 2rem;
+  vertical-align: middle;
+  min-height: 4rem;
 }
 
 .navbar__item:hover {

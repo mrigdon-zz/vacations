@@ -15,7 +15,6 @@ import 'styles/map.css';
 import 'styles/navbar.css';
 import 'styles/vacation-modal.css';
 import 'styles/modal.css';
-import sampleData from '../sampleData';
 
 document.addEventListener('DOMContentLoaded', () => {
   const root = document.getElementById('root');
