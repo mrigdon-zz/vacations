@@ -1,0 +1,26 @@
+.add-modal__input {
+  height: 100%;
+  border: 0;
+  font-size: 2rem;
+
+  &:focus {
+    outline-offset: unset;
+    outline: 0;
+  }
+
+  &--right {
+    text-align: right;
+  }
+}
+
+.add-modal__textarea {
+  min-height: 3rem;
+  width: 100%;
+  border: 0;
+  font-size: 1rem;
+
+  &:focus {
+    outline-offset: unset;
+    outline: 0;
+  }
+}

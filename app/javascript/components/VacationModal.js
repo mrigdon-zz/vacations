@@ -7,17 +7,36 @@ function travellersString(travellers) {
 }
 
 export default class VacationModal extends React.Component {
-  state = { openImage: null };
+  state = { openImage: null, uploadedImages: [] };
 
-  onClickImage = (image) => this.setState({ openImage: image });
+  setOpenImage = (openImage) => this.setState({ openImage });
 
-  closeImage = () => this.setState({ openImage: null });
+  addImage = (image) => {
+    const { uploadedImages } = this.state;
+    if (uploadedImages.includes(image)) return Promise.resolve();
+    return new Promise((resolve) => {
+      this.setState({ uploadedImages: [...uploadedImages, image] }, resolve);
+    });
+  };
+
+  addImages = (files) => {
+    if (files.length === 0) return;
+    const reader = new FileReader();
+    reader.addEventListener('load', () => {
+      this.addImage(reader.result).then(() => this.addImages(files.slice(1)));
+    });
+    reader.readAsDataURL(files[0]);
+  };
 
   render() {
     const { vacation, onRequestClose } = this.props;
-    const { openImage } = this.state;
     if (!vacation) return null;
     const { title, year, images, summary } = vacation;
+
+    const { openImage, uploadedImages } = this.state;
+
+    const imageInput = React.createRef(null);
+
     return (
       <React.Fragment>
         <Modal isPadded isFixed onRequestClose={onRequestClose}>
@@ -27,18 +46,32 @@ export default class VacationModal extends React.Component {
           </div>
           {summary && <p className="vacation-modal__summary">{summary}</p>}
           <div className="vacation-modal__images">
-            {images.map((image) => (
+            {[...images, ...uploadedImages].map((image) => (
               <div
                 key={image}
-                onClick={() => this.onClickImage(image)}
+                onClick={() => this.setOpenImage(image)}
                 style={{ backgroundImage: `url(${image})` }}
                 className="vacation-modal__image"
               />
             ))}
+            <div
+              className="vacation-modal__image vacation-modal__image--add"
+              onClick={() => imageInput.current.click()}
+            >
+              <div className="vacation-modal__add-icon" />
+              <input
+                multiple
+                ref={imageInput}
+                onChange={(e) => this.addImages(Array.from(e.target.files))}
+                type="file"
+                className="vacation-modal__add-input"
+                accept="image/*"
+              />
+            </div>
           </div>
         </Modal>
         {openImage && (
-          <Modal onRequestClose={this.closeImage}>
+          <Modal onRequestClose={() => this.setOpenImage(null)}>
             <img className="vacation-modal__big-image" src={openImage} />
           </Modal>
         )}

@@ -10,10 +10,9 @@
 import React from 'react';
 import { render } from 'react-dom';
 import App from 'components/App';
-import 'styles/index.css';
+import 'styles/index.scss';
 import 'styles/map.css';
 import 'styles/navbar.css';
-import 'styles/vacation-modal.css';
 import 'styles/modal.css';
 
 document.addEventListener('DOMContentLoaded', () => {
