@@ -29,6 +29,7 @@ gem 'haml'
 
 gem "google-cloud-storage", "~> 1.8", require: false
 gem "aws-sdk-s3", require: false
+gem 'rest-client'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -46,6 +47,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'annotate'
+  gem 'pry-rails'
 end
 
 group :test do

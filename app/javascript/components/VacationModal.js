@@ -42,7 +42,7 @@ export default class VacationModal extends React.Component {
   };
 
   render() {
-    const { vacation, onRequestClose } = this.props;
+    const { vacation, ...props } = this.props;
     if (!vacation) return null;
     const { title, year, images, summary } = vacation;
 
@@ -52,7 +52,7 @@ export default class VacationModal extends React.Component {
 
     return (
       <React.Fragment>
-        <Modal isPadded isFixed onRequestClose={onRequestClose}>
+        <Modal isPadded isFixed {...props}>
           <div className="vacation-modal__header">
             <h1>{title}</h1>
             <h1>{year}</h1>

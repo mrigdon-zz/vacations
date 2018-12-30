@@ -48,10 +48,17 @@
   flex-grow: 1;
 }
 
-.modal--padded {
+.modal__children--padded {
   padding: 2rem;
 }
 
 .modal--fixed {
   width: 50rem;
+}
+
+.modal__footer {
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid lightgray;
+  padding: 1rem;
 }
