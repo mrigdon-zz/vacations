@@ -1,5 +1,6 @@
 import React from 'react';
 import Modal from './Modal';
+import { put } from 'lib/ajax';
 
 function travellersString(travellers) {
   if (travellers.length === 1) return travellers[0];
@@ -11,6 +12,16 @@ export default class VacationModal extends React.Component {
 
   setOpenImage = (openImage) => this.setState({ openImage });
 
+  formData = (file) => {
+    const formData = new FormData();
+    formData.append('vacation[images][]', file);
+    return formData;
+  };
+
+  uploadFile = (file) => {
+    put(`/vacations/1`, this.formData(file));
+  };
+
   addImage = (image) => {
     const { uploadedImages } = this.state;
     if (uploadedImages.includes(image)) return Promise.resolve();
@@ -20,12 +31,14 @@ export default class VacationModal extends React.Component {
   };
 
   addImages = (files) => {
-    if (files.length === 0) return;
+    const file = files[0];
+    if (!file) return;
     const reader = new FileReader();
     reader.addEventListener('load', () => {
       this.addImage(reader.result).then(() => this.addImages(files.slice(1)));
     });
-    reader.readAsDataURL(files[0]);
+    reader.readAsDataURL(file);
+    this.uploadFile(file);
   };
 
   render() {
