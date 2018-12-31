@@ -8,6 +8,8 @@ body {
   font-family: Helvetica, sans-serif;
 }
 
+@import './variables';
+@import './add-image-tile';
 @import './add-modal';
 @import './vacation-modal';
 @import './button';

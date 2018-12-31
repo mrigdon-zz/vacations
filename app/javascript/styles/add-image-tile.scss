@@ -1,0 +1,36 @@
+$add-color: cornflowerblue;
+
+.add-image-tile {
+  border: 1px dotted $add-color;
+  background-color: aliceblue;
+}
+
+.add-image-tile__icon {
+  $height: 60px;
+  $width: $height / 5;
+  $top-offset: ($image-size / 2) - ($height / 2);
+  $left-offset: ($image-size / 2) - ($width / 2) - 1px;
+
+  background: $add-color;
+  height: $height;
+  position: relative;
+  width: $width;
+  top: $top-offset;
+  left: $left-offset;
+
+  &:after {
+    $after-offset: $width * 2;
+
+    background: $add-color;
+    content: '';
+    height: $width;
+    left: -$after-offset;
+    position: absolute;
+    top: $after-offset;
+    width: $height;
+  }
+}
+
+.add-image-tile__input {
+  display: none;
+}

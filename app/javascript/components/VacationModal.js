@@ -2,6 +2,7 @@ import React from 'react';
 import Modal from './Modal';
 import { put } from 'lib/ajax';
 import generatePreview from 'lib/generatePreview';
+import AddImageTile from './AddImageTile';
 
 function travellersString(travellers) {
   if (travellers.length === 1) return travellers[0];
@@ -41,27 +42,20 @@ export default class VacationModal extends React.Component {
           {summary && <p className="vacation-modal__summary">{summary}</p>}
           <div className="vacation-modal__images">
             {images.map((image) => (
-              <div
+              <a
+                className="vacation-modal__image"
+                href="javascript:void(0)"
                 key={image}
                 onClick={() => this.setOpenImage(image)}
                 style={{ backgroundImage: `url(${image})` }}
-                className="vacation-modal__image"
               />
             ))}
-            <div
-              className="vacation-modal__image vacation-modal__image--add"
+            <AddImageTile
+              className="vacation-modal__image"
+              inputRef={imageInput}
               onClick={() => imageInput.current.click()}
-            >
-              <div className="vacation-modal__add-icon" />
-              <input
-                multiple
-                ref={imageInput}
-                onChange={(e) => this.addImages(Array.from(e.target.files))}
-                type="file"
-                className="vacation-modal__add-input"
-                accept="image/*"
-              />
-            </div>
+              onSelect={(e) => this.addImages(Array.from(e.target.files))}
+            />
           </div>
         </Modal>
         {openImage && (

@@ -12,9 +12,6 @@
   margin-top: 1rem;
 }
 
-$image-size: 150px;
-$add-color: cornflowerblue;
-
 .vacation-modal__image {
   display: inline-block;
   background-position: center;
@@ -23,43 +20,7 @@ $add-color: cornflowerblue;
   margin: 0 1rem 1rem 0;
   height: $image-size;
   width: $image-size;
-  cursor: pointer;
   border-radius: 0.5rem;
-
-  &--add {
-    border: 1px dotted $add-color;
-    background-color: aliceblue;
-  }
-}
-
-.vacation-modal__add-icon {
-  $height: 60px;
-  $width: $height / 5;
-  $top-offset: ($image-size / 2) - ($height / 2);
-  $left-offset: ($image-size / 2) - ($width / 2) - 1px;
-
-  background: $add-color;
-  height: $height;
-  position: relative;
-  width: $width;
-  top: $top-offset;
-  left: $left-offset;
-
-  &:after {
-    $after-offset: $width * 2;
-
-    background: $add-color;
-    content: '';
-    height: $width;
-    left: -$after-offset;
-    position: absolute;
-    top: $after-offset;
-    width: $height;
-  }
-}
-
-.vacation-modal__add-input {
-  display: none;
 }
 
 @keyframes fadeIn {

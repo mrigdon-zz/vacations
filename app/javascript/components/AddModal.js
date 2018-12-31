@@ -15,8 +15,8 @@ export default class AddModal extends React.Component {
     latitude: null,
     longitude: null
   };
-
   yearInput = React.createRef();
+  summaryTextarea = React.createRef();
 
   handleSelectCity = ({ latitude, longitude, title }) => {
     this.setState({ latitude, longitude, title });
@@ -27,6 +27,7 @@ export default class AddModal extends React.Component {
     const { value } = e.target;
     if (!value.match(yearPattern)) return;
     this.setState({ year: value });
+    if (value.length === 4) this.summaryTextarea.current.focus();
   };
 
   handleAddImage = (preview, file) => {
@@ -66,6 +67,7 @@ export default class AddModal extends React.Component {
           ),
           summary: (
             <textarea
+              ref={this.summaryTextarea}
               className="add-modal__textarea"
               value={summary}
               placeholder="Enter an optional summary"
