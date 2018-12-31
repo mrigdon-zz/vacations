@@ -20,11 +20,19 @@ export default class SearchInput extends React.Component {
 
   setResultsHidden = (resultsHidden) => this.setState({ resultsHidden });
 
+  fetchSuggestions = debounce((query) => {
+    console.log('Searching...');
+    setTimeout(() => {
+      this.setResults(sampleResults);
+    }, 1000);
+  }, 500);
+
   handleChange = (e) => {
     const { value } = e.target;
     this.setQuery(value);
-    if (value) this.setResults(sampleResults);
-    else this.setResults([]);
+    this.setResults([]);
+    if (value) this.fetchSuggestions(value);
+    else this.fetchSuggestions.cancel();
   };
 
   render() {
