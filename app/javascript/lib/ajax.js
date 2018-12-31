@@ -2,6 +2,11 @@ function getAuthToken() {
   return document.querySelector('meta[name="csrf-token"]').content;
 }
 
+function handleResponse(response) {
+  if (response.ok) return response.json();
+  return response.json().then((error) => Promise.reject(error));
+}
+
 function ajax(url, options) {
   const defaultOptions = {
     credentials: 'same-origin',
@@ -10,7 +15,7 @@ function ajax(url, options) {
     },
     ...options
   };
-  return fetch(url, defaultOptions).then((res) => res.json());
+  return fetch(url, defaultOptions).then(handleResponse);
 }
 
 export function get(url) {

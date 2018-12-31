@@ -36,10 +36,12 @@ class AddModal extends React.Component {
   };
 
   handleSave = () => {
-    createVacation(this.state).then((vacation) => {
-      this.props.addVacation(vacation);
-      this.props.onRequestClose();
-    });
+    createVacation(this.state)
+      .then((vacation) => {
+        this.props.addVacation(vacation);
+        this.props.onRequestClose();
+      })
+      .catch((response) => console.log(response));
   };
 
   render() {
@@ -71,7 +73,7 @@ class AddModal extends React.Component {
               ref={this.summaryTextarea}
               className="add-modal__textarea"
               value={summary}
-              placeholder="Enter an optional summary"
+              placeholder="Enter a summary"
               onChange={(e) => this.setState({ summary: e.target.value })}
             />
           )
