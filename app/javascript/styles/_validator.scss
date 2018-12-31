@@ -1,0 +1,10 @@
+.validator {
+  &--error {
+    input,
+    input::placeholder,
+    textarea,
+    textarea::placeholder {
+      color: crimson;
+    }
+  }
+}

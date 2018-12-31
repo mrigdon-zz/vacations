@@ -28,6 +28,7 @@ export default class SearchInput extends React.Component {
     this.setResults([]);
     if (value) this.fetchSuggestions(value);
     else this.fetchSuggestions.cancel();
+    if (this.props.onChange) this.props.onChange(e);
   };
 
   handleSelect = (result) => {
