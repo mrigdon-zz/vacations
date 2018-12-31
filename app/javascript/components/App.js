@@ -11,7 +11,7 @@ export default function App({ vacations }) {
   return (
     <React.Fragment>
       <Navbar onAdd={() => setIsAddModalOpen(true)} />
-      <Map data={vacations} />
+      <Map vacations={vacations} />
       {isAddModalOpen && (
         <AddModal onRequestClose={() => setIsAddModalOpen(false)} />
       )}

@@ -12,38 +12,32 @@ export default class VacationModal extends React.Component {
 
   setOpenImage = (openImage) => this.setState({ openImage });
 
-  formData = (file) => {
+  imageFormData = (file) => {
     const formData = new FormData();
     formData.append('vacation[images][]', file);
     return formData;
   };
 
   uploadFile = (file) => {
-    put(`/vacations/1`, this.formData(file));
+    put(`/vacations/${this.props.vacation.id}`, this.imageFormData(file));
   };
 
-  addImage = (image) => {
-    const { uploadedImages } = this.state;
-    if (uploadedImages.includes(image)) return Promise.resolve();
+  generatePreview = (file) => {
     return new Promise((resolve) => {
-      this.setState({ uploadedImages: [...uploadedImages, image] }, resolve);
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.readAsDataURL(file);
     });
   };
 
   addImages = (files) => {
-    const file = files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.addEventListener('load', () => {
-      this.addImage(reader.result).then(() => this.addImages(files.slice(1)));
+    files.forEach((file) => {
+      this.generatePreview(file).then(this.props.onAddImage);
     });
-    reader.readAsDataURL(file);
-    this.uploadFile(file);
   };
 
   render() {
     const { vacation, ...props } = this.props;
-    if (!vacation) return null;
     const { title, year, images, summary } = vacation;
 
     const { openImage, uploadedImages } = this.state;
@@ -59,7 +53,7 @@ export default class VacationModal extends React.Component {
           </div>
           {summary && <p className="vacation-modal__summary">{summary}</p>}
           <div className="vacation-modal__images">
-            {[...images, ...uploadedImages].map((image) => (
+            {images.map((image) => (
               <div
                 key={image}
                 onClick={() => this.setOpenImage(image)}

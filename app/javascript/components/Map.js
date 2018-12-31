@@ -8,25 +8,30 @@ import createMarkers from '../lib/map/createMarkers';
 import * as am4core from '@amcharts/amcharts4/core';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import VacationModal from './VacationModal';
+import cloneDeep from 'lodash/cloneDeep';
 
 export default class Map extends React.Component {
-  static propTypes = {
-    data: PropTypes.arrayOf(
-      PropTypes.shape({
-        latitude: PropTypes.number.isRequired,
-        longitude: PropTypes.number.isRequired,
-        title: PropTypes.string.isRequired
+  state = { openVacationId: null, vacations: cloneDeep(this.props.vacations) };
+
+  handleClickMarker = ({ id }) => this.setState({ openVacationId: id });
+
+  closeModal = () => this.setState({ openVacationId: null });
+
+  withImage = (vacation, image) => ({
+    ...vacation,
+    images: [...vacation.images, image]
+  });
+
+  isOpen = (vacation) => vacation.id === this.state.openVacationId;
+
+  handleAddImage = (image) => {
+    this.setState({
+      vacations: this.state.vacations.map((vacation) => {
+        if (this.isOpen(vacation)) return this.withImage(vacation, image);
+        return vacation;
       })
-    )
+    });
   };
-
-  state = { openDataItem: null };
-
-  handleClickMarker = (dataItem) => {
-    this.setState({ openDataItem: dataItem });
-  };
-
-  closeModal = () => this.setState({ openDataItem: null });
 
   componentDidMount() {
     am4core.useTheme(am4themes_animated);
@@ -34,7 +39,7 @@ export default class Map extends React.Component {
     const polygonSeries = createCountryShapes(this.map);
     const polygonTemplate = createCountryIndicators(this.map, polygonSeries);
     addCountryHoverEffect(this.map, polygonTemplate);
-    createMarkers(this.map, this.props.data, this.handleClickMarker);
+    createMarkers(this.map, this.state.vacations, this.handleClickMarker);
   }
 
   componentWillUnmount() {
@@ -42,13 +47,17 @@ export default class Map extends React.Component {
   }
 
   render() {
+    const { openVacationId, vacations } = this.state;
     return (
       <React.Fragment>
         <div id="chartdiv" />
-        <VacationModal
-          vacation={this.state.openDataItem}
-          onRequestClose={this.closeModal}
-        />
+        {openVacationId && (
+          <VacationModal
+            vacation={vacations.find((v) => v.id === openVacationId)}
+            onAddImage={this.handleAddImage}
+            onRequestClose={this.closeModal}
+          />
+        )}
       </React.Fragment>
     );
   }

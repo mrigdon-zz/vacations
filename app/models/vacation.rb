@@ -22,7 +22,7 @@ class Vacation < ApplicationRecord
   validates :summary, presence: true
 
   def to_h
-    as_json(only: [:latitude, :longitude, :title, :year, :summary])
+    as_json(only: [:id, :latitude, :longitude, :title, :year, :summary])
       .merge('images' => image_urls(:images))
   end
 end
