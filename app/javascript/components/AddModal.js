@@ -1,17 +1,18 @@
 import React from 'react';
 import VacationModal from './VacationModal';
 import SearchInput from './SearchInput';
-import omit from 'lodash/omit';
+import createVacation from 'lib/createVacation';
+import { addVacation } from 'actions/vacations';
+import { connect } from 'react-redux';
 
 const yearPattern = /^\d{0,4}$/;
 
-export default class AddModal extends React.Component {
+class AddModal extends React.Component {
   state = {
     title: '',
     year: '',
     summary: '',
     images: [],
-    imagePreviews: [],
     latitude: null,
     longitude: null
   };
@@ -30,23 +31,25 @@ export default class AddModal extends React.Component {
     if (value.length === 4) this.summaryTextarea.current.focus();
   };
 
-  handleAddImage = (preview, file) => {
-    this.setState((state) => ({
-      imagePreviews: [...state.imagePreviews, preview],
-      images: [...state.images, file]
-    }));
+  handleAddImage = (image) => {
+    this.setState(({ images }) => ({ images: [...images, image] }));
   };
 
-  handleSave = () => {};
+  handleSave = () => {
+    createVacation(this.state).then((vacation) => {
+      this.props.addVacation(vacation);
+      this.props.onRequestClose();
+    });
+  };
 
   render() {
     const { onRequestClose } = this.props;
-    const { title, year, summary, imagePreviews } = this.state;
+    const { title, year, summary, images } = this.state;
 
     return (
       <VacationModal
         vacation={{
-          images: imagePreviews,
+          images: images,
           title: (
             <SearchInput
               className="add-modal__input"
@@ -79,8 +82,13 @@ export default class AddModal extends React.Component {
             Save
           </button>
         }
-        onAddImage={this.handleAddImage}
+        addImage={this.handleAddImage}
       />
     );
   }
 }
+
+export default connect(
+  () => ({}),
+  { addVacation }
+)(AddModal);

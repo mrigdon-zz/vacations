@@ -10,7 +10,11 @@ class VacationsController < ApplicationController
 
   def create
     vacation = Vacation.new(vacation_params)
-    render(json: vacation.to_h)
+    if vacation.save
+      render(json: vacation.to_h)
+    else
+      render(json: vacation.errors, status: :bad_request)
+    end
   end
 
   private

@@ -10,12 +10,7 @@ function ajax(url, options) {
     },
     ...options
   };
-  return fetch(url, defaultOptions);
-}
-
-export function put(url, data) {
-  const options = { method: 'put', body: data };
-  return ajax(url, options);
+  return fetch(url, defaultOptions).then((res) => res.json());
 }
 
 export function get(url) {

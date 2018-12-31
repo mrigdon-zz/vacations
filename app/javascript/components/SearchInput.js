@@ -13,17 +13,13 @@ export default class SearchInput extends React.Component {
   setResultsHidden = (resultsHidden) => this.setState({ resultsHidden });
 
   fetchSuggestions = debounce((query) => {
-    get(`/locations?query=${query}`)
-      .then((res) => res.json())
-      .then(this.setResults);
+    get(`/locations?query=${query}`).then(this.setResults);
   }, 500);
 
   fetchCoordinates = (result) => {
-    get(`/locations/${result.placeId}`)
-      .then((res) => res.json())
-      .then((coordinates) => {
-        this.props.onSelect({ ...result, ...coordinates });
-      });
+    get(`/locations/${result.placeId}`).then((coordinates) => {
+      this.props.onSelect({ ...result, ...coordinates });
+    });
   };
 
   handleChange = (e) => {

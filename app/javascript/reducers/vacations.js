@@ -4,12 +4,15 @@ export default function vacations(state = [], action) {
       return state.map((vacation) => {
         const { vacationId, image } = action;
         if (vacation.id !== vacationId) return vacation;
-        if (vacation.images.includes(image)) return vacation;
         return {
           ...vacation,
           images: [...vacation.images, image]
         };
       });
+
+    case 'ADD_VACATION':
+      return [...state, action.vacation];
+
     default:
       return state;
   }

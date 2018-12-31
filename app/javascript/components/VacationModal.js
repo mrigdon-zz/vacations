@@ -21,7 +21,10 @@ function VacationModal({ vacation, addImage, ...props }) {
 
   const addImages = (files) => {
     files.forEach((file) => {
-      generatePreview(file).then((image) => addImage(image, vacation.id));
+      generatePreview(file).then((url) => {
+        if (images.some((image) => image.url === url)) return;
+        addImage({ url, file }, vacation.id);
+      });
     });
   };
 
@@ -34,13 +37,13 @@ function VacationModal({ vacation, addImage, ...props }) {
         </div>
         {summary && <p className="vacation-modal__summary">{summary}</p>}
         <div className="vacation-modal__images">
-          {images.map((image) => (
+          {images.map(({ url }) => (
             <a
               className="vacation-modal__image"
               href="javascript:void(0)"
-              key={image}
-              onClick={() => setOpenImage(image)}
-              style={{ backgroundImage: `url(${image})` }}
+              key={url}
+              onClick={() => setOpenImage(url)}
+              style={{ backgroundImage: `url(${url})` }}
             />
           ))}
           <AddImageTile
@@ -60,7 +63,13 @@ function VacationModal({ vacation, addImage, ...props }) {
   );
 }
 
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  addImage: ownProps.addImage
+    ? ownProps.addImage
+    : (image, vacationId) => dispatch(addImage(image, vacationId))
+});
+
 export default connect(
   () => ({}),
-  { addImage }
+  mapDispatchToProps
 )(VacationModal);

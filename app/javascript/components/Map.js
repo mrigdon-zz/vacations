@@ -8,10 +8,13 @@ import { connect } from 'react-redux';
 function Map({ vacations }) {
   const [openVacationId, setOpenVacationId] = useState(null);
 
-  useEffect(() => {
-    const map = drawMap(vacations, setOpenVacationId);
-    return () => map.dispose();
-  }, []);
+  useEffect(
+    () => {
+      const map = drawMap(vacations, setOpenVacationId);
+      return () => map.dispose();
+    },
+    [vacations.length]
+  );
 
   return (
     <React.Fragment>
