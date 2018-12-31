@@ -9,10 +9,10 @@ export default function AddModal({ onRequestClose }) {
   const [longitude, setLongitude] = useState(null);
   const [title, setTitle] = useState(null);
 
-  const handleSelect = ({ description, lat, lng }) => {
-    setLatitude(lat);
-    setLatitude(lng);
-    setTitle(description);
+  const handleSelect = (location) => {
+    setLatitude(location.latitude);
+    setLatitude(location.longitude);
+    setTitle(location.title);
   };
 
   return (

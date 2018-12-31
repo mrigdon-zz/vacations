@@ -7,12 +7,13 @@ module LocationService
   def suggestions(query)
     response = json_get(suggestions_url(query))
     predictions = response['predictions']
-    predictions.map { |p| p.slice('description', 'place_id') }
+    predictions.map { |p| transform_suggestion(p) }
   end
 
   def coordinates(id)
     response = json_get(location_url(id))
-    response['result']['geometry']['location']
+    point = response['result']['geometry']['location']
+    transform_point(point)
   end
 
   private
@@ -32,5 +33,19 @@ module LocationService
   def json_get(url)
     response = RestClient.get(url)
     JSON.parse(response.body)
+  end
+
+  def transform_suggestion(suggestion)
+    {
+      title: suggestion['description'],
+      placeId: suggestion['place_id']
+    }
+  end
+
+  def transform_point(point)
+    {
+      latitude: point['lat'],
+      longitude: point['lng']
+    }
   end
 end

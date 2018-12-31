@@ -3,23 +3,6 @@ import { get } from 'lib/ajax';
 import debounce from 'lodash/debounce';
 import classNames from 'classnames';
 
-const sampleResults = [
-  {
-    description: 'Reykjavík, Iceland',
-    place_id: 'ChIJw-3c7rl01kgRcWDSMKIskew'
-  },
-  {
-    description: 'Reykjanesbær, Iceland',
-    place_id: 'ChIJnc-pJx4C1kgRZ6CYJ68gW4A'
-  },
-  { description: 'Reykholt, Iceland', place_id: 'ChIJ2_SWka831EgRpcvIUESbm_g' },
-  {
-    description: 'Reykjahlíð, Iceland',
-    place_id: 'ChIJr5VeNuKdzUgRZA7kUrsK0P8'
-  },
-  { description: 'Reykhólar, Iceland', place_id: 'ChIJpcY6URjc1EgRDo4KFlUVIgA' }
-];
-
 export default class SearchInput extends React.Component {
   state = { query: '', results: [], resultsHidden: false };
 
@@ -30,20 +13,17 @@ export default class SearchInput extends React.Component {
   setResultsHidden = (resultsHidden) => this.setState({ resultsHidden });
 
   fetchSuggestions = debounce((query) => {
-    console.log('Searching...');
-    setTimeout(() => {
-      console.log('Searched!');
-      this.setResults(sampleResults);
-    }, 1000);
+    get(`/locations?query=${query}`)
+      .then((res) => res.json())
+      .then(this.setResults);
   }, 500);
 
   fetchCoordinates = (result) => {
-    console.log('Getting coordinates...');
-    setTimeout(() => {
-      console.log('Got coordinates!');
-      const coordinates = { lat: 64.146582, lng: -21.9426354 };
-      this.props.onSelect({ ...result, ...coordinates });
-    }, 1000);
+    get(`/locations/${result.placeId}`)
+      .then((res) => res.json())
+      .then((coordinates) => {
+        this.props.onSelect({ ...result, ...coordinates });
+      });
   };
 
   handleChange = (e) => {
@@ -55,7 +35,7 @@ export default class SearchInput extends React.Component {
   };
 
   handleSelect = (result) => {
-    this.setQuery(result.description);
+    this.setQuery(result.title);
     this.fetchCoordinates(result);
   };
 
@@ -81,12 +61,12 @@ export default class SearchInput extends React.Component {
           >
             {results.map((result) => (
               <a
-                key={result.description}
+                key={result.title}
                 className="search-input__result"
                 href="javascript:void(0)"
                 onMouseDown={() => this.handleSelect(result)}
               >
-                {result.description}
+                {result.title}
               </a>
             ))}
           </div>
