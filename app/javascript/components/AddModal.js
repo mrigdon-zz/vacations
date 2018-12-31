@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import VacationModal from './VacationModal';
+import SearchInput from './SearchInput';
 
 export default function AddModal({ onRequestClose }) {
-  const [title, setTitle] = useState('');
   const [year, setYear] = useState('');
   const [summary, setSummary] = useState('');
 
@@ -15,12 +15,10 @@ export default function AddModal({ onRequestClose }) {
     <VacationModal
       vacation={{
         title: (
-          <input
-            ref={titleInput}
+          <SearchInput
+            inputRef={titleInput}
             className="add-modal__input"
-            value={title}
-            placeholder="Enter a title"
-            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Enter a city"
           />
         ),
         year: (
