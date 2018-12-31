@@ -16,7 +16,7 @@ export default class VacationModal extends React.Component {
 
   addImages = (files) => {
     files.forEach((file) => {
-      generatePreview(file).then((preview, file) => {
+      generatePreview(file).then((preview) => {
         if (this.props.vacation.images.includes(preview)) return;
         this.props.onAddImage(preview, file);
       });

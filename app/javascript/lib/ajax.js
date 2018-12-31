@@ -22,3 +22,8 @@ export function get(url) {
   const options = { method: 'get' };
   return ajax(url, options);
 }
+
+export function post(url, data) {
+  const options = { method: 'post', body: data };
+  return ajax(url, options);
+}

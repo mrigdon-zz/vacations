@@ -27,6 +27,13 @@ export default class Map extends React.Component {
     });
   };
 
+  handleCreated = (vacation) => {
+    this.setState({
+      vacations: [...this.state.vacations, vacation],
+      openVacationId: null
+    });
+  };
+
   componentDidMount() {
     this.map = drawMap(this.state.vacations, this.handleClickMarker);
   }

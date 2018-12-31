@@ -2,6 +2,7 @@ import React from 'react';
 import VacationModal from './VacationModal';
 import SearchInput from './SearchInput';
 import createVacation from 'lib/createVacation';
+import omit from 'lodash/omit';
 
 const yearPattern = /^\d{0,4}$/;
 
@@ -38,7 +39,7 @@ export default class AddModal extends React.Component {
   };
 
   handleSave = () => {
-    createVacation(this.state);
+    createVacation(omit(this.state, 'imagePreviews'));
   };
 
   render() {

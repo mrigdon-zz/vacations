@@ -8,9 +8,21 @@ class VacationsController < ApplicationController
     vacation.update(vacation_params)
   end
 
+  def create
+    vacation = Vacation.new(vacation_params)
+    render(json: vacation.to_h)
+  end
+
   private
 
   def vacation_params
-    params.require(:vacation).permit(images: [])
+    params.require(:vacation).permit(
+      :title,
+      :year,
+      :summary,
+      :latitude,
+      :longitude,
+      images: []
+    )
   end
 end
