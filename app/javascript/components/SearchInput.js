@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { get } from 'lib/ajax';
 import debounce from 'lodash/debounce';
+import classNames from 'classnames';
 
 const sampleResults = [
   { description: 'Reykavik, Iceland' },
@@ -10,39 +11,41 @@ const sampleResults = [
   { description: 'Helsinki, Finland' }
 ];
 
-const fetchSuggestions = debounce((query, setResults) => {
-  get(`/locations?query=${query}`).then(() => setResults(sampleResults));
-}, 500);
+export default class SearchInput extends React.Component {
+  state = { query: '', results: [], resultsHidden: false };
 
-export default function SearchInput({ inputRef, ...props }) {
-  const [query, setQuery] = useState('');
-  const [results, setResults] = useState(null);
+  setQuery = (query) => this.setState({ query });
 
-  const resetResults = () => {
-    fetchSuggestions.cancel();
-    setResults(null);
-  };
+  setResults = (results) => this.setState({ results });
 
-  const onChange = (e) => {
+  setResultsHidden = (resultsHidden) => this.setState({ resultsHidden });
+
+  handleChange = (e) => {
     const { value } = e.target;
-    setQuery(value);
-    if (value) fetchSuggestions(value, setResults);
-    else resetResults();
+    this.setQuery(value);
+    if (value) this.setResults(sampleResults);
+    else this.setResults([]);
   };
 
-  return (
-    <div className="search-input">
-      <input
-        {...props}
-        ref={inputRef}
-        value={query}
-        onChange={onChange}
-        onBlur={resetResults}
-        onFocus={onChange}
-      />
-      {query &&
-        results && (
-          <div className="search-input__results">
+  render() {
+    const { query, results, resultsHidden } = this.state;
+
+    return (
+      <div className="search-input">
+        <input
+          {...this.props}
+          autoFocus
+          value={query}
+          onChange={this.handleChange}
+          onFocus={() => this.setResultsHidden(false)}
+          onBlur={() => this.setResultsHidden(true)}
+        />
+        {results.length > 0 && (
+          <div
+            className={classNames('search-input__results', {
+              'search-input__results--hidden': resultsHidden
+            })}
+          >
             {results.map(({ description }) => (
               <a
                 key={description}
@@ -54,6 +57,7 @@ export default function SearchInput({ inputRef, ...props }) {
             ))}
           </div>
         )}
-    </div>
-  );
+      </div>
+    );
+  }
 }

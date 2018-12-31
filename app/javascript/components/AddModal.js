@@ -6,17 +6,11 @@ export default function AddModal({ onRequestClose }) {
   const [year, setYear] = useState('');
   const [summary, setSummary] = useState('');
 
-  const titleInput = useRef(null);
-  useEffect(() => {
-    titleInput.current.focus();
-  }, []);
-
   return (
     <VacationModal
       vacation={{
         title: (
           <SearchInput
-            inputRef={titleInput}
             className="add-modal__input"
             placeholder="Enter a city"
           />
