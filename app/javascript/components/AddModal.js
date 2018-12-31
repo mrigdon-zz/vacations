@@ -5,6 +5,15 @@ import SearchInput from './SearchInput';
 export default function AddModal({ onRequestClose }) {
   const [year, setYear] = useState('');
   const [summary, setSummary] = useState('');
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
+  const [title, setTitle] = useState(null);
+
+  const handleSelect = ({ description, lat, lng }) => {
+    setLatitude(lat);
+    setLatitude(lng);
+    setTitle(description);
+  };
 
   return (
     <VacationModal
@@ -13,6 +22,7 @@ export default function AddModal({ onRequestClose }) {
           <SearchInput
             className="add-modal__input"
             placeholder="Enter a city"
+            onSelect={handleSelect}
           />
         ),
         year: (

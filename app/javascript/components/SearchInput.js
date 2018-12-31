@@ -4,11 +4,20 @@ import debounce from 'lodash/debounce';
 import classNames from 'classnames';
 
 const sampleResults = [
-  { description: 'Reykavik, Iceland' },
-  { description: 'New York, NY, USA' },
-  { description: 'Copenhagen, Denmark' },
-  { description: 'Tallin, Estonia' },
-  { description: 'Helsinki, Finland' }
+  {
+    description: 'Reykjavík, Iceland',
+    place_id: 'ChIJw-3c7rl01kgRcWDSMKIskew'
+  },
+  {
+    description: 'Reykjanesbær, Iceland',
+    place_id: 'ChIJnc-pJx4C1kgRZ6CYJ68gW4A'
+  },
+  { description: 'Reykholt, Iceland', place_id: 'ChIJ2_SWka831EgRpcvIUESbm_g' },
+  {
+    description: 'Reykjahlíð, Iceland',
+    place_id: 'ChIJr5VeNuKdzUgRZA7kUrsK0P8'
+  },
+  { description: 'Reykhólar, Iceland', place_id: 'ChIJpcY6URjc1EgRDo4KFlUVIgA' }
 ];
 
 export default class SearchInput extends React.Component {
@@ -23,9 +32,19 @@ export default class SearchInput extends React.Component {
   fetchSuggestions = debounce((query) => {
     console.log('Searching...');
     setTimeout(() => {
+      console.log('Searched!');
       this.setResults(sampleResults);
     }, 1000);
   }, 500);
+
+  fetchCoordinates = (result) => {
+    console.log('Getting coordinates...');
+    setTimeout(() => {
+      console.log('Got coordinates!');
+      const coordinates = { lat: 64.146582, lng: -21.9426354 };
+      this.props.onSelect({ ...result, ...coordinates });
+    }, 1000);
+  };
 
   handleChange = (e) => {
     const { value } = e.target;
@@ -35,13 +54,19 @@ export default class SearchInput extends React.Component {
     else this.fetchSuggestions.cancel();
   };
 
+  handleSelect = (result) => {
+    this.setQuery(result.description);
+    this.fetchCoordinates(result);
+  };
+
   render() {
+    const { onSelect, ...props } = this.props;
     const { query, results, resultsHidden } = this.state;
 
     return (
       <div className="search-input">
         <input
-          {...this.props}
+          {...props}
           autoFocus
           value={query}
           onChange={this.handleChange}
@@ -54,13 +79,14 @@ export default class SearchInput extends React.Component {
               'search-input__results--hidden': resultsHidden
             })}
           >
-            {results.map(({ description }) => (
+            {results.map((result) => (
               <a
-                key={description}
+                key={result.description}
                 className="search-input__result"
                 href="javascript:void(0)"
+                onMouseDown={() => this.handleSelect(result)}
               >
-                {description}
+                {result.description}
               </a>
             ))}
           </div>
