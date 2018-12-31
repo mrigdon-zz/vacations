@@ -1,6 +1,7 @@
 import React from 'react';
 import Modal from './Modal';
 import { put } from 'lib/ajax';
+import generatePreview from 'lib/generatePreview';
 
 function travellersString(travellers) {
   if (travellers.length === 1) return travellers[0];
@@ -12,36 +13,22 @@ export default class VacationModal extends React.Component {
 
   setOpenImage = (openImage) => this.setState({ openImage });
 
-  imageFormData = (file) => {
-    const formData = new FormData();
-    formData.append('vacation[images][]', file);
-    return formData;
-  };
-
-  uploadFile = (file) => {
-    put(`/vacations/${this.props.vacation.id}`, this.imageFormData(file));
-  };
-
-  generatePreview = (file) => {
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
-      reader.readAsDataURL(file);
-    });
-  };
-
   addImages = (files) => {
     files.forEach((file) => {
-      this.generatePreview(file).then(this.props.onAddImage);
+      generatePreview(file).then((preview, file) => {
+        if (this.props.vacation.images.includes(preview)) return;
+        this.props.onAddImage(preview, file);
+      });
     });
   };
 
   render() {
+    // props
     const { vacation, ...props } = this.props;
     const { title, year, images, summary } = vacation;
-
+    // state
     const { openImage, uploadedImages } = this.state;
-
+    // refs
     const imageInput = React.createRef(null);
 
     return (
