@@ -5,13 +5,13 @@ import Navbar from './Navbar';
 import { useState } from 'react';
 import AddModal from './AddModal';
 
-export default function App({ vacations }) {
+export default function App() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   return (
     <React.Fragment>
       <Navbar onAdd={() => setIsAddModalOpen(true)} />
-      <Map vacations={vacations} />
+      <Map />
       {isAddModalOpen && (
         <AddModal onRequestClose={() => setIsAddModalOpen(false)} />
       )}

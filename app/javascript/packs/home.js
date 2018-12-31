@@ -10,6 +10,10 @@
 import React from 'react';
 import { render } from 'react-dom';
 import App from 'components/App';
+import { createStore } from 'redux';
+import rootReducer from 'reducers';
+import reduxBrowser from 'lib/reduxBrowser';
+import { Provider } from 'react-redux';
 import 'styles/index.scss';
 import 'styles/map.css';
 import 'styles/navbar.css';
@@ -18,5 +22,11 @@ import 'styles/modal.css';
 document.addEventListener('DOMContentLoaded', () => {
   const root = document.getElementById('root');
   const vacations = JSON.parse(root.dataset.vacations);
-  render(<App vacations={vacations} />, root);
+  const store = createStore(rootReducer, { vacations }, reduxBrowser());
+  render(
+    <Provider store={store}>
+      <App />
+    </Provider>,
+    root
+  );
 });

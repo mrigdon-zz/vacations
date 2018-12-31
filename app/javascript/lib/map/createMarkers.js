@@ -11,7 +11,7 @@ export default function createMarkers(map, data, onClick) {
   circle.strokeWidth = 2;
   circle.nonScaling = true;
   circle.tooltipText = '{title}';
-  circle.events.on('down', (e) => onClick(e.target.dataItem.dataContext));
+  circle.events.on('down', (e) => onClick(e.target.dataItem.dataContext.id));
 
   // Set property fields
   imageSeriesTemplate.propertyFields.latitude = 'latitude';

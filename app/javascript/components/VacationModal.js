@@ -1,69 +1,66 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import Modal from './Modal';
 import { put } from 'lib/ajax';
 import generatePreview from 'lib/generatePreview';
 import AddImageTile from './AddImageTile';
+import { connect } from 'react-redux';
+import { addImage } from 'actions/vacations';
 
 function travellersString(travellers) {
   if (travellers.length === 1) return travellers[0];
   return travellers.join(', ');
 }
 
-export default class VacationModal extends React.Component {
-  state = { openImage: null, uploadedImages: [] };
+function VacationModal({ vacation, addImage, ...props }) {
+  // props
+  const { title, year, images, summary } = vacation;
+  // state
+  const [openImage, setOpenImage] = useState(null);
+  // refs
+  const imageInput = useRef(null);
 
-  setOpenImage = (openImage) => this.setState({ openImage });
-
-  addImages = (files) => {
+  const addImages = (files) => {
     files.forEach((file) => {
-      generatePreview(file).then((preview) => {
-        if (this.props.vacation.images.includes(preview)) return;
-        this.props.onAddImage(preview, file);
-      });
+      generatePreview(file).then((image) => addImage(image, vacation.id));
     });
   };
 
-  render() {
-    // props
-    const { vacation, ...props } = this.props;
-    const { title, year, images, summary } = vacation;
-    // state
-    const { openImage, uploadedImages } = this.state;
-    // refs
-    const imageInput = React.createRef(null);
-
-    return (
-      <React.Fragment>
-        <Modal isPadded isFixed {...props}>
-          <div className="vacation-modal__header">
-            <h1>{title}</h1>
-            <h1>{year}</h1>
-          </div>
-          {summary && <p className="vacation-modal__summary">{summary}</p>}
-          <div className="vacation-modal__images">
-            {images.map((image) => (
-              <a
-                className="vacation-modal__image"
-                href="javascript:void(0)"
-                key={image}
-                onClick={() => this.setOpenImage(image)}
-                style={{ backgroundImage: `url(${image})` }}
-              />
-            ))}
-            <AddImageTile
+  return (
+    <React.Fragment>
+      <Modal isPadded isFixed {...props}>
+        <div className="vacation-modal__header">
+          <h1>{title}</h1>
+          <h1>{year}</h1>
+        </div>
+        {summary && <p className="vacation-modal__summary">{summary}</p>}
+        <div className="vacation-modal__images">
+          {images.map((image) => (
+            <a
               className="vacation-modal__image"
-              inputRef={imageInput}
-              onClick={() => imageInput.current.click()}
-              onSelect={(e) => this.addImages(Array.from(e.target.files))}
+              href="javascript:void(0)"
+              key={image}
+              onClick={() => setOpenImage(image)}
+              style={{ backgroundImage: `url(${image})` }}
             />
-          </div>
+          ))}
+          <AddImageTile
+            className="vacation-modal__image"
+            inputRef={imageInput}
+            onClick={() => imageInput.current.click()}
+            onSelect={(e) => addImages(Array.from(e.target.files))}
+          />
+        </div>
+      </Modal>
+      {openImage && (
+        <Modal onRequestClose={() => setOpenImage(null)}>
+          <img className="vacation-modal__big-image" src={openImage} />
         </Modal>
-        {openImage && (
-          <Modal onRequestClose={() => this.setOpenImage(null)}>
-            <img className="vacation-modal__big-image" src={openImage} />
-          </Modal>
-        )}
-      </React.Fragment>
-    );
-  }
+      )}
+    </React.Fragment>
+  );
 }
+
+export default connect(
+  () => ({}),
+  { addImage }
+)(VacationModal);
