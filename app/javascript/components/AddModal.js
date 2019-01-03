@@ -104,7 +104,7 @@ class AddModal extends React.Component {
             Save
           </button>
         }
-        addImage={this.handleAddImage}
+        onAddImage={this.handleAddImage}
       />
     );
   }

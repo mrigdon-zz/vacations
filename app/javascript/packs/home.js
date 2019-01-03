@@ -10,9 +10,9 @@
 import React from 'react';
 import { render } from 'react-dom';
 import App from 'components/App';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
 import rootReducer from 'reducers';
-import reduxBrowser from 'lib/reduxBrowser';
 import { Provider } from 'react-redux';
 import 'styles/index.scss';
 import 'styles/map.css';
@@ -22,7 +22,14 @@ import 'styles/modal.css';
 document.addEventListener('DOMContentLoaded', () => {
   const root = document.getElementById('root');
   const vacations = JSON.parse(root.dataset.vacations);
-  const store = createStore(rootReducer, { vacations }, reduxBrowser());
+
+  const composeAll = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+  const store = createStore(
+    rootReducer,
+    { vacations },
+    composeAll(applyMiddleware(thunk))
+  );
+
   render(
     <Provider store={store}>
       <App />

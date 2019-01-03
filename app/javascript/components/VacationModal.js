@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import { addImage, removeVacation } from 'actions/vacations';
 import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
 import IconButton from './IconButton';
-import { destroyVacation } from 'models/vacation';
 
 const deleteConfirmMessage =
   "Are you sure you want to delete this vacation? You'll lose all images associated with it.";
@@ -17,7 +16,8 @@ function travellersString(travellers) {
   return travellers.join(', ');
 }
 
-function VacationModal({ vacation, addImage, removeVacation, ...props }) {
+function VacationModal({ vacation, onAddImage, onRemove, ...props }) {
+  if (!vacation) return null;
   // props
   const { title, year, images, summary, id } = vacation;
   // state
@@ -29,17 +29,14 @@ function VacationModal({ vacation, addImage, removeVacation, ...props }) {
     files.forEach((file) => {
       generatePreview(file).then((url) => {
         if (images.some((image) => image.url === url)) return;
-        addImage({ url, file }, vacation.id);
+        onAddImage({ url, file }, vacation.id);
       });
     });
   };
 
   const handleDelete = () => {
     if (!confirm(deleteConfirmMessage)) return;
-    destroyVacation(id).then(() => {
-      props.onRequestClose();
-      removeVacation(id);
-    });
+    onRemove(id).then(props.onRequestClose);
   };
 
   return (
@@ -84,10 +81,10 @@ function VacationModal({ vacation, addImage, removeVacation, ...props }) {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  addImage: ownProps.addImage
-    ? ownProps.addImage
+  onAddImage: ownProps.onAddImage
+    ? ownProps.onAddImage
     : (image, vacationId) => dispatch(addImage(image, vacationId)),
-  removeVacation: (id) => dispatch(removeVacation(id))
+  onRemove: (id) => dispatch(removeVacation(id))
 });
 
 export default connect(

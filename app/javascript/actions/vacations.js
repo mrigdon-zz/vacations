@@ -1,3 +1,5 @@
+import { destroyVacation } from 'models/vacation';
+
 export function addImage(image, vacationId) {
   return { type: 'ADD_IMAGE', image, vacationId };
 }
@@ -7,5 +9,8 @@ export function addVacation(vacation) {
 }
 
 export function removeVacation(id) {
-  return { type: 'REMOVE_VACATION', id };
+  return (dispatch) =>
+    destroyVacation(id).then(() => {
+      dispatch({ type: 'REMOVE_VACATION', id });
+    });
 }
