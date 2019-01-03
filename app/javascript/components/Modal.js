@@ -13,9 +13,14 @@ export default function Modal({
   onRequestClose,
   isPadded,
   isFixed,
-  footer
+  footer,
+  className
 }) {
-  const modalClass = classNames('modal', { 'modal--fixed': isFixed });
+  const modalClass = classNames(
+    'modal',
+    { 'modal--fixed': isFixed },
+    className
+  );
   const childrenClass = classNames('modal__children', {
     'modal__children--padded': isPadded
   });

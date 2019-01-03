@@ -1,3 +1,7 @@
+.vaction-modal {
+  position: absolute;
+}
+
 .vacation-modal__header {
   display: flex;
   justify-content: space-between;
@@ -36,4 +40,10 @@
   max-height: 90vh;
   display: block;
   animation: fadeIn 0.25s;
+}
+
+.vacation-modal__actions {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import VacationModal from './VacationModal';
 import SearchInput from './SearchInput';
-import createVacation from 'lib/createVacation';
+import { createVacation } from 'models/vacation';
 import Validator from 'components/Validator';
 import { addVacation } from 'actions/vacations';
 import { connect } from 'react-redux';

@@ -27,3 +27,8 @@ export function post(url, data) {
   const options = { method: 'post', body: data };
   return ajax(url, options);
 }
+
+export function destroy(url) {
+  const options = { method: 'delete' };
+  return ajax(url, options);
+}

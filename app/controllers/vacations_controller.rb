@@ -1,11 +1,12 @@
 class VacationsController < ApplicationController
+  before_action :set_vacation, only: [:update, :destroy]
+
   def index
     @vacations = Vacation.all
   end
 
   def update
-    vacation = Vacation.find(params[:id])
-    vacation.update(vacation_params)
+    @vacation.update(vacation_params)
   end
 
   def create
@@ -17,7 +18,16 @@ class VacationsController < ApplicationController
     end
   end
 
+  def destroy
+    @vacation.destroy
+    render(json: nil)
+  end
+
   private
+
+  def set_vacation
+    @vacation = Vacation.find(params[:id])
+  end
 
   def vacation_params
     params.require(:vacation).permit(

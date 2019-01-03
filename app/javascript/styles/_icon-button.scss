@@ -1,0 +1,8 @@
+.icon-button {
+  border: none;
+  cursor: pointer;
+
+  & + .icon-button {
+    margin-left: 0.75rem;
+  }
+}
