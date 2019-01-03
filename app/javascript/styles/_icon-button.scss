@@ -1,6 +1,7 @@
 .icon-button {
   border: none;
   cursor: pointer;
+  background-color: transparent;
 
   & + .icon-button {
     margin-left: 0.75rem;
