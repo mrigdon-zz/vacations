@@ -4,8 +4,16 @@
 
 .vacation-modal__header {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
   font-family: Pacifico, cursive;
+}
+
+.vacation-modal__title {
+  flex-grow: 1;
+}
+
+.vacation-modal__year {
+  width: 10.715rem;
 }
 
 .vacation-modal__summary {

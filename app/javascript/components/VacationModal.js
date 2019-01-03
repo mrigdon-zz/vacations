@@ -49,8 +49,8 @@ function VacationModal({ vacation, onAddImage, onRemove, ...props }) {
           </div>
         )}
         <div className="vacation-modal__header">
-          <h1>{title}</h1>
-          <h1>{year}</h1>
+          <h1 className="vacation-modal__title">{title}</h1>
+          <h1 className="vacation-modal__year">{year}</h1>
         </div>
         {summary && <p className="vacation-modal__summary">{summary}</p>}
         <div className="vacation-modal__images">
