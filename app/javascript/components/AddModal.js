@@ -1,7 +1,6 @@
 import React from 'react';
 import VacationModal from './VacationModal';
 import SearchInput from './SearchInput';
-import { createVacation } from 'models/vacation';
 import Validator from 'components/Validator';
 import { addVacation } from 'actions/vacations';
 import { connect } from 'react-redux';
@@ -49,11 +48,9 @@ class AddModal extends React.Component {
   };
 
   handleSave = () => {
-    createVacation(this.state)
-      .then((vacation) => {
-        this.props.addVacation(vacation);
-        this.props.onRequestClose();
-      })
+    this.props
+      .onSave(this.state)
+      .then(this.props.onRequestClose)
       .catch((errors) => this.setState({ errors }));
   };
 
@@ -112,5 +109,5 @@ class AddModal extends React.Component {
 
 export default connect(
   () => ({}),
-  { addVacation }
+  (dispatch) => ({ onSave: (vacation) => dispatch(addVacation(vacation)) })
 )(AddModal);
