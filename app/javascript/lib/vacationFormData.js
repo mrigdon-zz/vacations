@@ -7,11 +7,12 @@ export default function vacationFormData({
   images
 }) {
   const f = new FormData();
-  f.append('vacation[title]', title);
-  f.append('vacation[year]', year);
-  f.append('vacation[summary]', summary);
-  f.append('vacation[latitude]', latitude);
-  f.append('vacation[longitude]', longitude);
-  images.forEach(({ file }) => f.append('vacation[images][]', file));
+  if (title) f.append("vacation[title]", title);
+  if (year) f.append("vacation[year]", year);
+  if (summary) f.append("vacation[summary]", summary);
+  if (latitude) f.append("vacation[latitude]", latitude);
+  if (longitude) f.append("vacation[longitude]", longitude);
+  if (images)
+    images.forEach(({ file }) => f.append("vacation[images][]", file));
   return f;
 }

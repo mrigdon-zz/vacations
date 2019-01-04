@@ -7,6 +7,7 @@ class VacationsController < ApplicationController
 
   def update
     @vacation.update(vacation_params)
+    render(json: @vacation.to_h)
   end
 
   def create

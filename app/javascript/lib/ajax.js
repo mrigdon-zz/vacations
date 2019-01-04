@@ -4,14 +4,14 @@ function getAuthToken() {
 
 function handleResponse(response) {
   if (response.ok) return response.json();
-  return response.json().then((error) => Promise.reject(error));
+  return response.json().then(error => Promise.reject(error));
 }
 
 function ajax(url, options) {
   const defaultOptions = {
-    credentials: 'same-origin',
+    credentials: "same-origin",
     headers: {
-      'X-CSRF-Token': getAuthToken()
+      "X-CSRF-Token": getAuthToken()
     },
     ...options
   };
@@ -19,16 +19,21 @@ function ajax(url, options) {
 }
 
 export function get(url) {
-  const options = { method: 'get' };
+  const options = { method: "get" };
   return ajax(url, options);
 }
 
 export function post(url, data) {
-  const options = { method: 'post', body: data };
+  const options = { method: "post", body: data };
   return ajax(url, options);
 }
 
 export function destroy(url) {
-  const options = { method: 'delete' };
+  const options = { method: "delete" };
+  return ajax(url, options);
+}
+
+export function put(url, data) {
+  const options = { method: "put", body: data };
   return ajax(url, options);
 }
