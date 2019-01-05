@@ -12,3 +12,7 @@ export function createVacation(vacation) {
 export function updateVacation(id, data) {
   return put(`/vacations/${id}`, vacationFormData(data));
 }
+
+export function destroyImage(vacationId, imageId) {
+  return destroy(`/vacations/${vacationId}/images/${imageId}`);
+}

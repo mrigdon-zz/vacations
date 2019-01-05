@@ -1,7 +1,8 @@
 import {
   createVacation,
   destroyVacation,
-  updateVacation
+  updateVacation,
+  destroyImage
 } from "models/vacation";
 
 export function addImage(image, vacationId) {
@@ -12,7 +13,10 @@ export function addImage(image, vacationId) {
 }
 
 export function removeImage(imageId, vacationId) {
-  return { type: "REMOVE_IMAGE", imageId, vacationId };
+  return dispatch =>
+    destroyImage(vacationId, imageId).then(() => {
+      dispatch({ type: "REMOVE_IMAGE", imageId, vacationId });
+    });
 }
 
 export function addVacation(vacation) {

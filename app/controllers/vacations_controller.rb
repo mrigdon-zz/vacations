@@ -1,5 +1,5 @@
 class VacationsController < ApplicationController
-  before_action :set_vacation, only: [:update, :destroy]
+  before_action :set_vacation, only: [:update, :destroy, :destroy_image]
 
   def index
     @vacations = Vacation.all
@@ -21,6 +21,11 @@ class VacationsController < ApplicationController
 
   def destroy
     @vacation.destroy
+    render(json: nil)
+  end
+
+  def destroy_image
+    @vacation.images.find(params[:image_id]).purge_later
     render(json: nil)
   end
 

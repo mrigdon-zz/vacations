@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   root 'vacations#index'
-  resources :vacations, only: [:update, :create, :destroy]
   resources :locations, only: [:show, :index]
+  resources :vacations, only: [:update, :create, :destroy] do
+    delete '/images/:image_id', on: :member, to: 'vacations#destroy_image'
+  end
 end
