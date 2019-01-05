@@ -22,6 +22,32 @@
 
 .vacation-modal__images {
   margin-top: 1rem;
+
+  @keyframes shake {
+    $degrees: 1;
+    0% {
+      transform: rotateZ(0deg);
+    }
+    25% {
+      transform: rotateZ(#{$degrees}deg);
+    }
+    50% {
+      transform: rotateZ(0deg);
+    }
+    75% {
+      transform: rotateZ(-#{$degrees}deg);
+    }
+    100% {
+      transform: rotateZ(0deg);
+    }
+  }
+
+  &--editing .vacation-modal__image:not(:last-child) {
+    animation-name: shake;
+    animation-duration: 0.3s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
 }
 
 .vacation-modal__image {
