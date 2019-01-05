@@ -20,7 +20,7 @@
         transform: scale(0);
       }
     }
-    animation: shrink 0.2s linear;
-    animation-fill-mode: forwards;
+    animation: shrink 0.2s linear !important;
+    animation-fill-mode: forwards !important;
   }
 }

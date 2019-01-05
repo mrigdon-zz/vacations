@@ -42,7 +42,7 @@
     }
   }
 
-  &--editing .vacation-modal__image:not(:last-child) {
+  &--editing span .vacation-modal__image {
     animation-name: shake;
     animation-duration: 0.3s;
     animation-timing-function: linear;

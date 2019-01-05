@@ -9,6 +9,7 @@ import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 import IconButton from "./IconButton";
 import VacationImage from "./VacationImage";
 import classnames from "classnames";
+import AnimateScale from "./AnimateScale";
 
 const deleteConfirmMessage =
   "Are you sure you want to delete this vacation? You'll lose all images associated with it.";
@@ -94,17 +95,19 @@ class VacationModal extends React.Component {
               "vacation-modal__images--editing": isEditingImages
             })}
           >
-            {images.map(({ url, id }) => (
-              <VacationImage
-                className="vacation-modal__image"
-                key={url}
-                src={url}
-                isHeld={isEditingImages}
-                onClick={() => this.handleClickImage(url)}
-                onHeld={this.handleHeldImage}
-                onRemove={() => onRemoveImage(id, vacation.id)}
-              />
-            ))}
+            <AnimateScale>
+              {images.map(({ url, id }) => (
+                <VacationImage
+                  className="vacation-modal__image"
+                  key={url}
+                  src={url}
+                  isHeld={isEditingImages}
+                  onClick={() => this.handleClickImage(url)}
+                  onHeld={this.handleHeldImage}
+                  onRemove={() => onRemoveImage(id, vacation.id)}
+                />
+              ))}
+            </AnimateScale>
             <AddImageTile
               className="vacation-modal__image"
               inputRef={this.imageInput}
