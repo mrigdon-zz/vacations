@@ -43,15 +43,18 @@ class VacationModal extends React.Component {
     onRemove(vacation.id).then(onRequestClose);
   };
 
-  stopEditing = e => {
-    if (e.target.closest(".vacation-modal__image:not(:last-child)")) return;
-    this.setIsEditingImages(false);
-    document.onclick = null;
+  handleClickImage = image => {
+    if (this.state.isEditingImages) return;
+    this.setOpenImage(image);
   };
 
-  handleClickImage = image => {
-    if (this.state.isEditingImages) document.onclick = this.stopEditing;
-    else this.setOpenImage(image);
+  handleHeldImage = () => {
+    this.setIsEditingImages(true);
+    document.onclick = e => {
+      if (e.target.closest(".vacation-modal__image")) return;
+      this.setIsEditingImages(false);
+      document.onclick = null;
+    };
   };
 
   componentWillUnmount() {
@@ -60,7 +63,13 @@ class VacationModal extends React.Component {
 
   render() {
     // props
-    const { vacation, onAddImage, onRemove, ...props } = this.props;
+    const {
+      vacation,
+      onAddImage,
+      onRemove,
+      onRemoveImage,
+      ...props
+    } = this.props;
     if (!vacation) return null;
     const { title, year, images, summary, id } = vacation;
     // state
@@ -85,14 +94,15 @@ class VacationModal extends React.Component {
               "vacation-modal__images--editing": isEditingImages
             })}
           >
-            {images.map(({ url }) => (
+            {images.map(({ url, id }) => (
               <VacationImage
                 className="vacation-modal__image"
                 key={url}
                 src={url}
-                allHeld={isEditingImages}
+                isHeld={isEditingImages}
                 onClick={() => this.handleClickImage(url)}
-                onHeld={() => this.setIsEditingImages(true)}
+                onHeld={this.handleHeldImage}
+                onRemove={() => onRemoveImage(id, vacation.id)}
               />
             ))}
             <AddImageTile

@@ -5,24 +5,21 @@ import classnames from "classnames";
 import AnimateScale from "./AnimateScale";
 
 export default class VacationImage extends React.Component {
-  state = { isHolding: false, isHeld: false };
+  state = { isHolding: false };
 
   handleMouseDown = () => {
+    if (this.props.isHeld) return;
     this.setState({ isHolding: true });
-    this.holdTimer = setTimeout(() => {
-      this.setState({ isHeld: true });
-      this.props.onHeld();
-    }, 1000);
+    this.holdTimer = setTimeout(this.props.onHeld, 1000);
   };
 
   handleMouseUp = () => {
-    if (this.state.isHeld) return;
+    if (this.props.isHeld) return;
     clearTimeout(this.holdTimer);
   };
 
   render() {
-    const { isHeld } = this.state;
-    const { src, onHeld, className, allHeld, ...props } = this.props;
+    const { src, onHeld, className, isHeld, onRemove, ...props } = this.props;
     return (
       <a
         {...props}
@@ -33,11 +30,12 @@ export default class VacationImage extends React.Component {
         onMouseUp={this.handleMouseUp}
       >
         <AnimateScale>
-          {allHeld && (
+          {isHeld && (
             <IconButton
               className="vacation-image__delete"
               icon={faTimesCircle}
               size="2x"
+              onClick={onRemove}
             />
           )}
         </AnimateScale>
