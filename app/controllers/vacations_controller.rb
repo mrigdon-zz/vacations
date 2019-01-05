@@ -24,11 +24,6 @@ class VacationsController < ApplicationController
     render(json: nil)
   end
 
-  def destroy_image
-    @vacation.images.find(params[:image_id]).purge_later
-    render(json: nil)
-  end
-
   private
 
   def set_vacation
