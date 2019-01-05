@@ -4,7 +4,7 @@ import { put } from "lib/ajax";
 import generatePreview from "lib/generatePreview";
 import AddImageTile from "./AddImageTile";
 import { connect } from "react-redux";
-import { addImage, removeVacation } from "actions/vacations";
+import { addImage, removeVacation, removeImage } from "actions/vacations";
 import { faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
 import IconButton from "./IconButton";
 import VacationImage from "./VacationImage";
@@ -117,6 +117,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   onAddImage: ownProps.onAddImage
     ? ownProps.onAddImage
     : (image, vacationId) => dispatch(addImage(image, vacationId)),
+  onRemoveImage: (imageId, vacationId) =>
+    dispatch(removeImage(imageId, vacationId)),
   onRemove: id => dispatch(removeVacation(id))
 });
 

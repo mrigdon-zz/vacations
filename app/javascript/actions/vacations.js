@@ -11,6 +11,10 @@ export function addImage(image, vacationId) {
     });
 }
 
+export function removeImage(imageId, vacationId) {
+  return { type: "REMOVE_IMAGE", imageId, vacationId };
+}
+
 export function addVacation(vacation) {
   return dispatch =>
     createVacation(vacation).then(vacation => {

@@ -4,7 +4,8 @@ class ApplicationRecord < ActiveRecord::Base
   def image_hash(image)
     {
       url: prod? ? prod_url(image) : dev_url(image),
-      file: nil
+      file: nil,
+      id: image.id
     }
   end
 
