@@ -2,9 +2,7 @@ import React from "react";
 import IconButton from "./IconButton";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import classnames from "classnames";
-import ReactCSSTransitionGroup from "react-addons-css-transition-group";
-
-const animationDuration = 200;
+import AnimateScale from "./AnimateScale";
 
 export default class VacationImage extends React.Component {
   state = { isHolding: false, isHeld: false };
@@ -34,11 +32,7 @@ export default class VacationImage extends React.Component {
         onMouseDown={this.handleMouseDown}
         onMouseUp={this.handleMouseUp}
       >
-        <ReactCSSTransitionGroup
-          transitionName="vacation-image__delete"
-          transitionLeaveTimeout={animationDuration}
-          transitionEnterTimeout={animationDuration}
-        >
+        <AnimateScale>
           {allHeld && (
             <IconButton
               className="vacation-image__delete"
@@ -46,7 +40,7 @@ export default class VacationImage extends React.Component {
               size="2x"
             />
           )}
-        </ReactCSSTransitionGroup>
+        </AnimateScale>
       </a>
     );
   }
