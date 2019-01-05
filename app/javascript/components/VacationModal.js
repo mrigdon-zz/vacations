@@ -90,6 +90,7 @@ class VacationModal extends React.Component {
                 className="vacation-modal__image"
                 key={url}
                 src={url}
+                allHeld={isEditingImages}
                 onClick={() => this.handleClickImage(url)}
                 onHeld={() => this.setIsEditingImages(true)}
               />

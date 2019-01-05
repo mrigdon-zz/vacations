@@ -24,7 +24,7 @@
   margin-top: 1rem;
 
   @keyframes shake {
-    $degrees: 1;
+    $degrees: 0.75;
     0% {
       transform: rotateZ(0deg);
     }
