@@ -13,7 +13,10 @@
 #
 
 class Vacation < ApplicationRecord
+  IMAGE_ENDPOINT = 'https://storage.googleapis.com/vacation-images/'
+
   has_many_attached :images
+  has_many :photos, as: :imageable, class_name: 'Image', dependent: :destroy
 
   validates :latitude, presence: true
   validates :longitude, presence: true
@@ -24,5 +27,11 @@ class Vacation < ApplicationRecord
   def to_h
     as_json(only: [:id, :latitude, :longitude, :title, :year, :summary])
       .merge('images' => images.map { |image| image_hash(image) })
+  end
+
+  def photo_urls
+    photos.map do |photo|
+      IMAGE_ENDPOINT + photo.filename
+    end
   end
 end
