@@ -2,12 +2,13 @@ import {
   createVacation,
   destroyVacation,
   updateVacation,
-  destroyImage
+  destroyImage,
+  uploadImage
 } from "models/vacation";
 
 export function addImage(image, vacationId) {
   return dispatch =>
-    updateVacation(vacationId, { images: [image] }).then(() => {
+    uploadImage(vacationId, image.file).then(() => {
       dispatch({ type: "ADD_IMAGE", image, vacationId });
     });
 }

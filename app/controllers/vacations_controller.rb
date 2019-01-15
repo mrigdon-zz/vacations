@@ -1,5 +1,5 @@
 class VacationsController < ApplicationController
-  before_action :set_vacation, only: [:update, :destroy, :destroy_image]
+  before_action :set_vacation, only: [:update, :destroy, :upload_image]
 
   def index
     @vacations = Vacation.all

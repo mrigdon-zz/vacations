@@ -16,4 +16,8 @@
 
 class Image < ApplicationRecord
   belongs_to :imageable, polymorphic: true
+
+  def to_h
+    { id: id, url: ENV['IMAGES_URL'] + filename }
+  end
 end

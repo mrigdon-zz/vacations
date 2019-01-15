@@ -16,3 +16,9 @@ export function updateVacation(id, data) {
 export function destroyImage(vacationId, imageId) {
   return destroy(`/vacations/${vacationId}/images/${imageId}`);
 }
+
+export function uploadImage(vacationId, file) {
+  const formData = new FormData();
+  formData.append("file", file);
+  return post(`/vacations/${vacationId}/images`, formData);
+}

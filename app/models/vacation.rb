@@ -26,7 +26,7 @@ class Vacation < ApplicationRecord
 
   def to_h
     as_json(only: [:id, :latitude, :longitude, :title, :year, :summary])
-      .merge('images' => images.map { |image| image_hash(image) })
+      .merge('images' => photos.map(&:to_h))
   end
 
   def photo_urls
