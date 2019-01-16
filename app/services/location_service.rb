@@ -1,5 +1,5 @@
 module LocationService
-  KEY = ENV.fetch('GOOGLE_MAPS_KEY')
+  KEY = ENV.fetch('GOOGLE_KEY')
   BASE_URL = 'https://maps.googleapis.com/maps/api/place'
 
   extend self
