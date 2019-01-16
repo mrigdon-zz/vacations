@@ -1,14 +1,19 @@
 class GoogleUploader < ApplicationUploader
   ENDPOINT = 'https://www.googleapis.com/upload/storage/v1/b/vacation-images/o?uploadType=media'
 
-  def upload
-    RestClient.post(url, @image.tempfile, { content_type: @image.content_type })
-    @filename
+  def self.upload(image)
+    filename = gen_filename(image)
+    RestClient.post(
+      url(filename),
+      image.tempfile,
+      { content_type: image.content_type }
+    )
+    filename
   end
 
   private
 
-  def url
-    "#{ENDPOINT}&key=#{ENV['GOOGLE_KEY']}&name=#{@filename}"
+  def self.url(filename)
+    "#{ENDPOINT}&key=#{ENV['GOOGLE_KEY']}&name=#{filename}"
   end
 end

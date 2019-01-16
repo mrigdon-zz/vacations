@@ -7,7 +7,7 @@ class Vacations::ImagesController < ApplicationController
   end
 
   def create
-    filename = Uploader.new(params[:file]).upload
+    filename = Uploader.upload(params[:file])
     image = @vacation.photos.create(filename: filename)
     render(json: image.to_h)
   end

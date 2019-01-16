@@ -1,8 +1,9 @@
 class LocalUploader < ApplicationUploader
-  def upload
-    File.open("public/uploads/#{@filename}", 'wb') do |file|
-      file.write(@image.read)
+  def self.upload(image)
+    filename = gen_filename(image)
+    File.open("public/uploads/#{filename}", 'wb') do |file|
+      file.write(image.read)
     end
-    @filename
+    filename
   end
 end
