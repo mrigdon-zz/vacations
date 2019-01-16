@@ -7,7 +7,7 @@ class Vacations::ImagesController < ApplicationController
   end
 
   def create
-    filename = uploader(params[:file]).upload
+    filename = Uploader.new(params[:file]).upload
     image = @vacation.photos.create(filename: filename)
     render(json: image.to_h)
   end
@@ -16,9 +16,5 @@ class Vacations::ImagesController < ApplicationController
 
   def set_vacation
     @vacation = Vacation.find(params[:vacation_id])
-  end
-
-  def uploader(image)
-    Rails.env.prod? ? GoogleUploader.new(image) : LocalUploader.new(image)
   end
 end

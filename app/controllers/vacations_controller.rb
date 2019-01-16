@@ -2,7 +2,7 @@ class VacationsController < ApplicationController
   before_action :set_vacation, only: [:update, :destroy, :upload_image]
 
   def index
-    @vacations = Vacation.all
+    @vacations = Vacation.includes(:photos).all
   end
 
   def update
