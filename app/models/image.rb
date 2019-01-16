@@ -17,6 +17,10 @@
 class Image < ApplicationRecord
   belongs_to :imageable, polymorphic: true
 
+  after_destroy do
+    Uploader.purge_later(filename)
+  end
+
   def to_h
     { id: id, url: Rails.application.config.upload_path + filename }
   end
