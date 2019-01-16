@@ -13,7 +13,7 @@ class GoogleUploader < ApplicationUploader
   end
 
   def self.purge_later(filename)
-    RestClient.delete(delete_url(filename))
+    GooglePurgeJob.perform_later(delete_url(filename))
   end
 
   private
