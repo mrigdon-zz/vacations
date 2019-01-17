@@ -41,9 +41,10 @@ vacations = [
 vacations.each do |vacation|
   record = Vacation.create! vacation.except(:images)
   vacation[:images].each do |i|
-    record.images.attach(
-      io: File.open("#{Rails.root}/public/#{i}"),
-      filename: i
-    )
+    File.open("#{Rails.root}/public/#{i}", 'r') do |file|
+      image = ActionDispatch::Http::UploadedFile.new(tempfile: file)
+      filename = Uploader.upload(image)
+      record.photos.create!(filename: filename)
+    end
   end
 end

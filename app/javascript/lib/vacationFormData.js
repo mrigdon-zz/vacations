@@ -12,7 +12,6 @@ export default function vacationFormData({
   if (summary) f.append("vacation[summary]", summary);
   if (latitude) f.append("vacation[latitude]", latitude);
   if (longitude) f.append("vacation[longitude]", longitude);
-  if (images)
-    images.forEach(({ file }) => f.append("vacation[images][]", file));
+  if (images) images.forEach(({ file }) => f.append("images[]", file));
   return f;
 }

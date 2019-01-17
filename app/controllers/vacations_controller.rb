@@ -13,6 +13,10 @@ class VacationsController < ApplicationController
   def create
     vacation = Vacation.new(vacation_params)
     if vacation.save
+      params[:images].each do |image|
+        filename = Uploader.upload(image)
+        vacation.photos.create(filename: filename)
+      end
       render(json: vacation.to_h)
     else
       render(json: vacation.errors, status: :bad_request)
