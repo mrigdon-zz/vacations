@@ -8,7 +8,7 @@ import {
 
 export function addImage(image, vacationId) {
   return dispatch =>
-    uploadImage(vacationId, image.file).then(() => {
+    uploadImage(vacationId, image.file).then(image => {
       dispatch({ type: "ADD_IMAGE", image, vacationId });
     });
 }
