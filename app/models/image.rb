@@ -21,6 +21,11 @@ class Image < ApplicationRecord
     Uploader.purge_later(filename)
   end
 
+  def self.upload(file)
+    filename = Uploader.upload(file)
+    create(filename: filename)
+  end
+
   def to_h
     { id: id, url: Rails.application.config.upload_path + filename }
   end

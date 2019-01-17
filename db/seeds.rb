@@ -43,8 +43,7 @@ vacations.each do |vacation|
   vacation[:images].each do |i|
     File.open("#{Rails.root}/public/#{i}", 'r') do |file|
       image = ActionDispatch::Http::UploadedFile.new(tempfile: file)
-      filename = Uploader.upload(image)
-      record.photos.create!(filename: filename)
+      record.photos.upload(image)
     end
   end
 end
