@@ -2,7 +2,7 @@ class Vacations::ImagesController < ApplicationController
   before_action :set_vacation, only: [:destroy, :create]
 
   def destroy
-    @vacation.images.find(params[:id]).purge_later
+    @vacation.photos.find(params[:id]).destroy
     render(json: nil)
   end
 
