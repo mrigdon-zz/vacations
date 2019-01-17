@@ -22,7 +22,7 @@ $add-color: cornflowerblue;
     $after-offset: $width * 2;
 
     background: $add-color;
-    content: '';
+    content: "";
     height: $width;
     left: -$after-offset;
     position: absolute;
