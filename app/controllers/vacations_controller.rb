@@ -37,8 +37,7 @@ class VacationsController < ApplicationController
       :year,
       :summary,
       :latitude,
-      :longitude,
-      images: []
+      :longitude
     )
   end
 end
