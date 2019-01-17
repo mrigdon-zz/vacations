@@ -13,7 +13,6 @@
 #
 
 class Vacation < ApplicationRecord
-  has_many_attached :images
   has_many :photos, as: :imageable, class_name: 'Image', dependent: :destroy
 
   validates :latitude, presence: true
