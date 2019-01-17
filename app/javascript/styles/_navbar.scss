@@ -1,25 +1,25 @@
 @font-face {
-  font-family: 'Pacifico';
+  font-family: "Pacifico";
   src: url(../fonts/Pacifico-Regular.ttf);
 }
 
 .navbar {
-  border-bottom: 1px solid #efefef;
-  margin-bottom: 1rem;
+  border-bottom: #{$navbar-border-width} solid #efefef;
+  margin-bottom: $navbar-margin-bottom;
 }
 
 .navbar__main {
-  font-family: 'Pacifico', cursive;
+  font-family: "Pacifico", cursive;
 }
 
 .navbar__item {
   color: black;
   text-decoration: none;
   display: inline-block;
-  padding: 1rem;
-  line-height: 2rem;
+  padding: ($navbar-height / 4) 1rem;
+  line-height: $navbar-height / 2;
   vertical-align: middle;
-  min-height: 4rem;
+  min-height: $navbar-height;
 }
 
 .navbar__item:hover {
