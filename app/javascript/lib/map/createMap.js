@@ -7,8 +7,8 @@ export default function createMap() {
   const chart = am4core.create("chartdiv", am4maps.MapChart);
 
   // disable zoom, drag, and resize
-  chart.maxZoomLevel = 1;
-  chart.seriesContainer.draggable = false;
+  // chart.maxZoomLevel = 1;
+  // chart.seriesContainer.draggable = false;
   chart.seriesContainer.resizable = false;
 
   // Set map definition
